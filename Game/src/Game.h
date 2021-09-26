@@ -4,6 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <vector>
+#include "BaseObject.h"
 
 class CGame
 {
@@ -49,6 +50,8 @@ private:
 	SDL_Texture* m_pTexture = 0; // the new SDL_Texture variable
 	SDL_Rect m_sourceRectangle = {}; // the first rectangle
 	SDL_Rect m_destinationRectangle = {}; // another rectangle
+
+	std::vector<IBaseObject*> m_Objects;
 
 	bool m_bRunning = false;
 };

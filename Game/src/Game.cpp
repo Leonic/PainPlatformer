@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "EventHandler.h"
 #include <iostream>
+#include "Player.h"
 
 CGame* CGame::s_pInstance = 0;
 
@@ -32,10 +33,12 @@ bool CGame::Init(const char* title, int xpos, int ypos, int width, int height, b
 				SDL_SetRenderDrawColor(m_pRenderer,
 					255, 255, 255, 255);
 
-                if (!CTextureManager::Instance()->Load("assets/akrius.png", "akrius", m_pRenderer))
+                if (!CTextureManager::Instance()->Load("assets/player.png", "akrius", m_pRenderer))
 				{
 					return false;
 				}
+
+				m_Objects.push_back(new CPlayer("Test", "akrius", CVector2D(0, 0), CVector2D(128, 128)));
 
 				// we need to use placeholders, for some reason
 				CEventHandler::Instance()->AddOnMouseDown(std::bind(&CGame::testCallback, this, std::placeholders::_1));
@@ -65,15 +68,20 @@ void CGame::Draw()
 {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to draw color
 
-    if (CTextureManager::Instance()->m_textureMap["akrius"] != nullptr)
-        CTextureManager::Instance()->Draw("akrius", 0, 0, 437, 437, m_pRenderer);
+	for (size_t i = 0; i < m_Objects.size(); i++)
+	{
+		m_Objects[i]->OnDraw();
+	}
 
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 
 void CGame::OnThink()
 { 
-
+	for (size_t i = 0; i < m_Objects.size(); i++)
+	{
+		m_Objects[i]->OnThink();
+	}
 }
 
 void CGame::HandleEvents()
