@@ -3,11 +3,6 @@
 #include "Game.h"
 #include "EngineMetadata.h"
 
-#ifdef WIN32
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#endif
-
 int FPS = 62;
 Uint32 DELAY_TIME = 1000 / FPS;
 
@@ -17,13 +12,6 @@ const char* FULLSCREEN_PARAM = "-f";
 const char* FPS_PARAM = "-fps";
 
 bool m_bRunning = false;
-
-std::string get_current_dir() {
-	char buff[FILENAME_MAX]; //create string buffer to hold path
-	GetCurrentDir(buff, FILENAME_MAX);
-	std::string current_working_dir(buff);
-	return current_working_dir;
-}
 
 bool FlagExists(char** argv, int argc, const char* flag)
 {
@@ -67,7 +55,7 @@ int main(int argc, char** argv)
 
 	char szTitle[999];
 	
-	snprintf(szTitle, sizeof(szTitle), "Pain Platformer (Build: %d, git: %s) %s", GAME_BUILD_NUMBER, GAME_GIT_DESC, get_current_dir().c_str());
+	snprintf(szTitle, sizeof(szTitle), "Pain Platformer (Build: %d, git: %s)", GAME_BUILD_NUMBER, GAME_GIT_DESC);
 
 	if (Game::Instance()->Init(szTitle, 100, 100, 640, 480, false))
 	{
