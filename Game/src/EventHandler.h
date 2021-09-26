@@ -6,14 +6,14 @@
 #include <vector>
 #include "EngineTypes.h"
 
-class EventHandler 
+class CEventHandler 
 {
 public:
-	static EventHandler* Instance()
+	static CEventHandler* Instance()
 	{
 		if (s_pInstance == 0)
 		{
-			s_pInstance = new EventHandler();
+			s_pInstance = new CEventHandler();
 		}
 
 		return s_pInstance;
@@ -41,8 +41,8 @@ public:
 	void Destroy();
 
 private:
-    EventHandler();
-	~EventHandler();
+    CEventHandler();
+	~CEventHandler();
 
 	void onMouseButtonDown(SDL_Event e);
 	void onMouseButtonUp(SDL_Event e);
@@ -62,7 +62,7 @@ private:
 	std::vector<HInputCallback> m_fingerDownCallbacks;
 	std::vector<HInputCallback> m_fingerUpCallbacks;
 
-	static EventHandler* s_pInstance;
+	static CEventHandler* s_pInstance;
 
 	Uint8* m_keystates = 0;
 };

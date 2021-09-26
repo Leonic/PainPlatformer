@@ -3,9 +3,9 @@
 #include "EventHandler.h"
 #include <iostream>
 
-Game* Game::s_pInstance = 0;
+CGame* CGame::s_pInstance = 0;
 
-bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
+bool CGame::Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
 	// attempt to initalize SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -17,43 +17,43 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
 			flags = SDL_WINDOW_FULLSCREEN;
 		}
 
-		std::cout << "SDL init success\n";
+		std::cout << "(CGame::Init) SDL init success" << std::endl;
 		// init the window
 		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 
 		if (m_pWindow != 0)
 		{
-			std::cout << "Window creation success\n";
+			std::cout << "(CGame::Init) Window creation success" << std::endl;
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 
 			if (m_pRenderer != 0) // render init success
 			{
-				std::cout << "renderer creation success\n";
+				std::cout << "(CGame::Init) Renderer creation success" << std::endl;
 				SDL_SetRenderDrawColor(m_pRenderer,
 					255, 255, 255, 255);
 
-                if (!TextureManager::Instance()->Load("assets/akrius.png", "akrius", m_pRenderer))
+                if (!CTextureManager::Instance()->Load("assets/akrius.png", "akrius", m_pRenderer))
 				{
 					return false;
 				}
 
 				// we need to use placeholders, for some reason
-				EventHandler::Instance()->AddOnMouseDown(std::bind(&Game::testCallback, this, std::placeholders::_1));
-				EventHandler::Instance()->AddOnMouseUp(std::bind(&Game::testCallback, this, std::placeholders::_1));
+				CEventHandler::Instance()->AddOnMouseDown(std::bind(&CGame::testCallback, this, std::placeholders::_1));
+				CEventHandler::Instance()->AddOnMouseUp(std::bind(&CGame::testCallback, this, std::placeholders::_1));
 			}
 			else
 			{
-				std::cout << "Render init fail\n";
+				std::cout << "(CGame::Init) Render init fail" << std::endl;
 				return false; // renderer init fail
 			}
 		}
 		else
 		{
-			std::cout << "SDL init fail\n";
+			std::cout << "(CGame::Init) SDL init fail" << std::endl;
 			return false; // SDL init fail
 		}
 
-		std::cout << "Init success\n";
+		std::cout << "(CGame::Init) Init success" << std::endl;
 		m_bRunning = true; // everything inited successfully, start the main loop
 
 		return true;
@@ -61,29 +61,29 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
 	return false;
 }
 
-void Game::Draw()
+void CGame::Draw()
 {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to draw color
 
-    if (TextureManager::Instance()->m_textureMap["akrius"] != nullptr)
-        TextureManager::Instance()->Draw("akrius", 0, 0, 437, 437, m_pRenderer);
+    if (CTextureManager::Instance()->m_textureMap["akrius"] != nullptr)
+        CTextureManager::Instance()->Draw("akrius", 0, 0, 437, 437, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 
-void Game::OnThink()
+void CGame::OnThink()
 { 
 
 }
 
-void Game::HandleEvents()
+void CGame::HandleEvents()
 {
-    EventHandler::Instance()->OnThink();
+    CEventHandler::Instance()->OnThink();
 }
 
-void Game::Destroy()
+void CGame::Destroy()
 {
-	std::cout << "Cleaning Game instance...\n";
+	std::cout << "(CGame::Init) Cleaning Game instance..." << std::endl;
 
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_DestroyWindow(m_pWindow);
@@ -91,20 +91,20 @@ void Game::Destroy()
 	SDL_Quit();
 }
 
-void Game::Quit()
+void CGame::Quit()
 {
 	m_bRunning = false;
 }
 
-void Game::testCallback(SDL_Event e)
+void CGame::testCallback(SDL_Event e)
 {
 	switch (e.type)
 	{
 	case SDL_MOUSEBUTTONDOWN:
-		std::cout << "Mouse Down!" << std::endl;
+		std::cout << "(CGame::testCallback) Mouse Down!" << std::endl;
 		break;
 	case SDL_MOUSEBUTTONUP:
-		std::cout << "Mouse Up!" << std::endl;
+		std::cout << "(CGame::testCallback) Mouse Up!" << std::endl;
 		break;
 	}
 }
