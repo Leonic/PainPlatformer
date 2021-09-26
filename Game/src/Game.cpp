@@ -36,6 +36,10 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
 				{
 					return false;
 				}
+
+				// we need to use placeholders, for some reason
+				EventHandler::Instance()->AddOnMouseDown(std::bind(&Game::testCallback, this, std::placeholders::_1));
+				EventHandler::Instance()->AddOnMouseUp(std::bind(&Game::testCallback, this, std::placeholders::_1));
 			}
 			else
 			{
@@ -90,4 +94,17 @@ void Game::Destroy()
 void Game::Quit()
 {
 	m_bRunning = false;
+}
+
+void Game::testCallback(SDL_Event e)
+{
+	switch (e.type)
+	{
+	case SDL_MOUSEBUTTONDOWN:
+		std::cout << "Mouse Down!" << std::endl;
+		break;
+	case SDL_MOUSEBUTTONUP:
+		std::cout << "Mouse Up!" << std::endl;
+		break;
+	}
 }

@@ -18,6 +18,7 @@ set(PainNSuffering_Header
     src/Game.h
     src/TextureManager.h
     src/EventHandler.h
+    src/EngineTypes.h
 )
 
 if (WIN32)
