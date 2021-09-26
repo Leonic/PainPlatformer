@@ -5,23 +5,23 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
-class Game
+class CGame
 {
 public:
-	static Game* Instance()
+	static CGame* Instance()
 	{
 		if (s_pInstance == 0)
 		{
-			s_pInstance = new Game();
+			s_pInstance = new CGame();
 			return s_pInstance;
 		}
 		return s_pInstance;
 	}
 private:
-	Game() {}
-	~Game() {}
+	CGame() {}
+	~CGame() {}
 	
-	static Game* s_pInstance;
+	static CGame* s_pInstance;
 
 public:
 
@@ -43,14 +43,14 @@ public:
 	SDL_Window* GetWindow() const { return m_pWindow; }
 
 private:
-	SDL_Window* m_pWindow;
-	SDL_Renderer* m_pRenderer;
+	SDL_Window* m_pWindow = 0;
+	SDL_Renderer* m_pRenderer = 0;
 
-	SDL_Texture* m_pTexture; // the new SDL_Texture variable
-	SDL_Rect m_sourceRectangle; // the first rectangle
-	SDL_Rect m_destinationRectangle; // another rectangle
+	SDL_Texture* m_pTexture = 0; // the new SDL_Texture variable
+	SDL_Rect m_sourceRectangle = {}; // the first rectangle
+	SDL_Rect m_destinationRectangle = {}; // another rectangle
 
-	bool m_bRunning;
+	bool m_bRunning = false;
 };
 
 #endif /* defined(__Game__) */

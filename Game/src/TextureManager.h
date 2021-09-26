@@ -6,18 +6,18 @@
 #include <string>
 #include <map>
 
-class TextureManager
+class CTextureManager
 {
 private:
-	TextureManager() {} ;
-	static TextureManager* s_pInstance;
+	CTextureManager() {} ;
+	static CTextureManager* s_pInstance;
 
 public:
-	static TextureManager* Instance()
+	static CTextureManager* Instance()
 	{
 		if (s_pInstance == 0)
 		{
-			s_pInstance = new TextureManager();
+			s_pInstance = new CTextureManager();
 			return s_pInstance;
 		}
 		return s_pInstance;

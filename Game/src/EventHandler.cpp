@@ -2,19 +2,19 @@
 #include "Game.h"
 #include <iostream>
 
-EventHandler* EventHandler::s_pInstance = 0;
+CEventHandler* CEventHandler::s_pInstance = 0;
 
-EventHandler::EventHandler()
+CEventHandler::CEventHandler()
 {
-    std::cout << "EventHandler created." << std::endl;
+    std::cout << "(CEventHandler::CEventHandler) CEventHandler created." << std::endl;
 }
 
-EventHandler::~EventHandler()
+CEventHandler::~CEventHandler()
 {
     Destroy();
 }
 
-void EventHandler::onMouseButtonDown(SDL_Event e)
+void CEventHandler::onMouseButtonDown(SDL_Event e)
 {
     if (m_mouseDownCallbacks.size() != 0)
     {
@@ -25,7 +25,7 @@ void EventHandler::onMouseButtonDown(SDL_Event e)
     }
 }
 
-void EventHandler::onMouseButtonUp(SDL_Event e)
+void CEventHandler::onMouseButtonUp(SDL_Event e)
 {
     if (m_mouseUpCallbacks.size() != 0)
     {
@@ -36,7 +36,7 @@ void EventHandler::onMouseButtonUp(SDL_Event e)
     }
 }
 
-void EventHandler::onKeyDown(SDL_Event e)
+void CEventHandler::onKeyDown(SDL_Event e)
 {
     m_keystates = (Uint8*)SDL_GetKeyboardState(0);
 
@@ -49,7 +49,7 @@ void EventHandler::onKeyDown(SDL_Event e)
     }
 }
 
-void EventHandler::onKeyUp(SDL_Event e)
+void CEventHandler::onKeyUp(SDL_Event e)
 {
     m_keystates = (Uint8*)SDL_GetKeyboardState(0);
 
@@ -62,7 +62,7 @@ void EventHandler::onKeyUp(SDL_Event e)
     }
 }
 
-void EventHandler::onFingerDown(SDL_Event e)
+void CEventHandler::onFingerDown(SDL_Event e)
 {
     if (m_fingerDownCallbacks.size() != 0)
     {
@@ -73,7 +73,7 @@ void EventHandler::onFingerDown(SDL_Event e)
     }
 }
 
-void EventHandler::onFingerUp(SDL_Event e)
+void CEventHandler::onFingerUp(SDL_Event e)
 {
     if (m_fingerUpCallbacks.size() != 0)
     {
@@ -84,7 +84,7 @@ void EventHandler::onFingerUp(SDL_Event e)
     }
 }
 
-void EventHandler::OnThink()
+void CEventHandler::OnThink()
 {
     SDL_Event e;
 
@@ -95,7 +95,7 @@ void EventHandler::OnThink()
         {
 
         case SDL_QUIT:
-            Game::Instance()->Quit();
+            CGame::Instance()->Quit();
             break;
 
         case SDL_MOUSEBUTTONDOWN:
@@ -125,7 +125,7 @@ void EventHandler::OnThink()
     }
 }
 
-void EventHandler::Destroy()
+void CEventHandler::Destroy()
 {
     // Clean up
     m_keyDownCallbacks.clear();
@@ -138,37 +138,37 @@ void EventHandler::Destroy()
     m_fingerUpCallbacks.clear();
 }
 
-void EventHandler::AddOnKeyDown(HKeyCallback callBack)
+void CEventHandler::AddOnKeyDown(HKeyCallback callBack)
 {
     m_keyDownCallbacks.push_back(callBack);
 }
 
-void EventHandler::AddOnKeyUp(HKeyCallback callBack)
+void CEventHandler::AddOnKeyUp(HKeyCallback callBack)
 {
     m_keyUpCallbacks.push_back(callBack);
 }
 
-void EventHandler::AddOnMouseDown(HInputCallback callBack)
+void CEventHandler::AddOnMouseDown(HInputCallback callBack)
 {
     m_mouseDownCallbacks.push_back(callBack);
 }
 
-void EventHandler::AddOnMouseUp(HInputCallback callBack)
+void CEventHandler::AddOnMouseUp(HInputCallback callBack)
 {
     m_mouseUpCallbacks.push_back(callBack);
 }
 
-void EventHandler::AddOnFingerDown(HInputCallback callBack)
+void CEventHandler::AddOnFingerDown(HInputCallback callBack)
 {
     m_fingerDownCallbacks.push_back(callBack);
 }
 
-void EventHandler::AddOnFingerUp(HInputCallback callBack)
+void CEventHandler::AddOnFingerUp(HInputCallback callBack)
 {
     m_fingerUpCallbacks.push_back(callBack);
 }
 
-void EventHandler::RemoveOnKeyDown(HKeyCallback callBack)
+void CEventHandler::RemoveOnKeyDown(HKeyCallback callBack)
 {
     for (size_t i = 0; i < m_keyDownCallbacks.size(); i++)
     {
@@ -180,7 +180,7 @@ void EventHandler::RemoveOnKeyDown(HKeyCallback callBack)
     }
 }
 
-void EventHandler::RemoveOnKeyUp(HKeyCallback callBack)
+void CEventHandler::RemoveOnKeyUp(HKeyCallback callBack)
 {
     for (size_t i = 0; i < m_keyUpCallbacks.size(); i++)
     {
@@ -192,7 +192,7 @@ void EventHandler::RemoveOnKeyUp(HKeyCallback callBack)
     }
 }
 
-void EventHandler::RemoveOnMouseDown(HInputCallback callBack)
+void CEventHandler::RemoveOnMouseDown(HInputCallback callBack)
 {
     for (size_t i = 0; i < m_mouseDownCallbacks.size(); i++)
     {
@@ -204,7 +204,7 @@ void EventHandler::RemoveOnMouseDown(HInputCallback callBack)
     }
 }
 
-void EventHandler::RemoveOnMouseUp(HInputCallback callBack)
+void CEventHandler::RemoveOnMouseUp(HInputCallback callBack)
 {
     for (size_t i = 0; i < m_mouseUpCallbacks.size(); i++)
     {
@@ -216,7 +216,7 @@ void EventHandler::RemoveOnMouseUp(HInputCallback callBack)
     }
 }
 
-void EventHandler::RemoveOnFingerDown(HInputCallback callBack)
+void CEventHandler::RemoveOnFingerDown(HInputCallback callBack)
 {
     for (size_t i = 0; i < m_fingerDownCallbacks.size(); i++)
     {
@@ -228,7 +228,7 @@ void EventHandler::RemoveOnFingerDown(HInputCallback callBack)
     }
 }
 
-void EventHandler::RemoveOnFingerUp(HInputCallback callBack)
+void CEventHandler::RemoveOnFingerUp(HInputCallback callBack)
 {
     for (size_t i = 0; i < m_fingerUpCallbacks.size(); i++)
     {

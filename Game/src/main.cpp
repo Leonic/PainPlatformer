@@ -75,15 +75,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	snprintf(szTitle, sizeof(szTitle), "Pain Platformer (Build: %d, git: %s)", GAME_BUILD_NUMBER, GAME_GIT_DESC);
 
-	if (Game::Instance()->Init(szTitle, 100, 100, 640, 480, false))
+	if (CGame::Instance()->Init(szTitle, 100, 100, 640, 480, false))
 	{
-		while (Game::Instance()->IsRunning())
+		while (CGame::Instance()->IsRunning())
 		{
 			frameStart = SDL_GetTicks();
 
-			Game::Instance()->HandleEvents();
-			Game::Instance()->OnThink();
-			Game::Instance()->Draw();
+			CGame::Instance()->HandleEvents();
+			CGame::Instance()->OnThink();
+			CGame::Instance()->Draw();
 
 			frameTime = SDL_GetTicks() - frameStart;
 
@@ -95,12 +95,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	}
 	else
 	{
-		std::cout << "Engine Error (Game Init failed!) - " << SDL_GetError() << "\n";
+		std::cout << "(main.cpp) Engine Error (Game Init failed!) - " << SDL_GetError() << "\n";
 		return -1;
 	}
 
 	std::cout << "Cleaning up...\n";
-	Game::Instance()->Destroy();
+	CGame::Instance()->Destroy();
 
 	return 0;
 }
@@ -108,21 +108,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #elif _UNIX
 int main(int argc, char** argv)
 {
-    Uint32 frameStart, frameTime;
+	Uint32 frameStart, frameTime;
 
 	char szTitle[999];
-	
+
 	snprintf(szTitle, sizeof(szTitle), "Pain Platformer (Build: %d, git: %s)", GAME_BUILD_NUMBER, GAME_GIT_DESC);
 
-	if (Game::Instance()->Init(szTitle, 100, 100, 640, 480, false))
+	if (CGame::Instance()->Init(szTitle, 100, 100, 640, 480, false))
 	{
-		while (Game::Instance()->IsRunning())
+		while (CGame::Instance()->IsRunning())
 		{
 			frameStart = SDL_GetTicks();
 
-			Game::Instance()->HandleEvents();
-			Game::Instance()->OnThink();
-			Game::Instance()->Draw();
+			CGame::Instance()->HandleEvents();
+			CGame::Instance()->OnThink();
+			CGame::Instance()->Draw();
 
 			frameTime = SDL_GetTicks() - frameStart;
 
@@ -139,8 +139,8 @@ int main(int argc, char** argv)
 	}
 
 	std::cout << "Cleaning up...\n";
-	Game::Instance()->Destroy();
+	CGame::Instance()->Destroy();
 
-    return 0;
+	return 0;
 }
 #endif

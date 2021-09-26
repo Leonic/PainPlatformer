@@ -1,9 +1,9 @@
 #include "TextureManager.h"
 #include <SDL2/SDL_image.h>
 
-TextureManager* TextureManager::s_pInstance = 0;
+CTextureManager* CTextureManager::s_pInstance = 0;
 
-bool TextureManager::Load(std::string fileName, std::string id, SDL_Renderer* pRenderer)
+bool CTextureManager::Load(std::string fileName, std::string id, SDL_Renderer* pRenderer)
 {
     // load dah image
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
@@ -30,7 +30,7 @@ bool TextureManager::Load(std::string fileName, std::string id, SDL_Renderer* pR
 	return false;
 }
 
-void TextureManager::Draw(std::string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
+void CTextureManager::Draw(std::string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
 {
     // RECTANGLESSS ---> SCREEN
 	SDL_Rect srcRect;
@@ -49,7 +49,7 @@ void TextureManager::Draw(std::string id, int x, int y, int width, int height, S
 		&destRect, 0, 0, flip);
 }
 
-void TextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
+void CTextureManager::DrawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
 {
     // rectangles for drawing to the screeeeen
 	SDL_Rect srcRect;

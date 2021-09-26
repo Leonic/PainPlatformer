@@ -12,6 +12,7 @@ set(PainNSuffering_Src
     src/Game.cpp
     src/TextureManager.cpp
     src/EventHandler.cpp
+    src/PainObject.cpp
 )
 
 set(PainNSuffering_Header
@@ -19,6 +20,9 @@ set(PainNSuffering_Header
     src/TextureManager.h
     src/EventHandler.h
     src/EngineTypes.h
+    src/BaseObject.h
+    src/PainObject.h
+    src/Vector2D.h
 )
 
 if (WIN32)
