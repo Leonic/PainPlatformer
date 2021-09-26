@@ -4,7 +4,7 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Main project name
-project ("Warspite")
+project ("PainNSuffering")
 
 # GCC will default to C11 if we don't do this and everything will crash and burn
 set(CMAKE_CXX_STANDARD 17)
