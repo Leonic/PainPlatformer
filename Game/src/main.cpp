@@ -3,6 +3,10 @@
 #include "Game.h"
 #include "EngineMetadata.h"
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
 int FPS = 62;
 Uint32 DELAY_TIME = 1000 / FPS;
 
@@ -49,6 +53,59 @@ void SetFPS(int newFPS)
 	DELAY_TIME = 1000 / FPS;
 }
 
+#ifdef _WIN32
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
+{
+#ifdef USE_CONSOLE
+	if (FlagExists(__argv, __argc, "-console"))
+	{
+		// Create a console and output all stdout and sterr to it.
+		AllocConsole();
+
+		// Redirect the std stuff
+		freopen("CONIN$", "r", stdin);
+		freopen("CONOUT$", "w", stdout);
+		freopen("CONOUT$", "w", stderr);
+	}
+#endif
+
+	Uint32 frameStart, frameTime;
+
+	char szTitle[999];
+
+	snprintf(szTitle, sizeof(szTitle), "Pain Platformer (Build: %d, git: %s)", GAME_BUILD_NUMBER, GAME_GIT_DESC);
+
+	if (Game::Instance()->Init(szTitle, 100, 100, 640, 480, false))
+	{
+		while (Game::Instance()->IsRunning())
+		{
+			frameStart = SDL_GetTicks();
+
+			Game::Instance()->HandleEvents();
+			Game::Instance()->OnThink();
+			Game::Instance()->Draw();
+
+			frameTime = SDL_GetTicks() - frameStart;
+
+			if (frameTime < DELAY_TIME)
+			{
+				SDL_Delay((int)(DELAY_TIME - frameTime));
+			}
+		}
+	}
+	else
+	{
+		std::cout << "Engine Error (Game Init failed!) - " << SDL_GetError() << "\n";
+		return -1;
+	}
+
+	std::cout << "Cleaning up...\n";
+	Game::Instance()->Destroy();
+
+	return 0;
+}
+
+#elif _UNIX
 int main(int argc, char** argv)
 {
     Uint32 frameStart, frameTime;
@@ -86,3 +143,4 @@ int main(int argc, char** argv)
 
     return 0;
 }
+#endif
