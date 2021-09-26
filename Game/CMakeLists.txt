@@ -109,7 +109,7 @@ endif()
 target_link_libraries(${GAME_NAME} PUBLIC ${PainNSuffering_Libs})
 
 if (UNIX)
-    install(TARGETS ${GAME_NAME}RUNTIME DESTINATION ./bin/${PROJECT_NAME})
+    install(TARGETS ${GAME_NAME} RUNTIME DESTINATION ./bin/${PROJECT_NAME})
 elseif (WIN32)
     install(TARGETS ${GAME_NAME} RUNTIME DESTINATION ./)
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/
