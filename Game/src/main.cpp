@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Game.h"
 #include "EngineMetadata.h"
+#include "EngineTypes.h"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -75,7 +76,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	snprintf(szTitle, sizeof(szTitle), "Pain Platformer (Build: %d, git: %s)", GAME_BUILD_NUMBER, GAME_GIT_DESC);
 
-	if (CGame::Instance()->Init(szTitle, 100, 100, 640, 480, false))
+	if (CGame::Instance()->Init(szTitle, 100, 100, WIDTH, HEIGHT, false))
 	{
 		while (CGame::Instance()->IsRunning())
 		{
@@ -114,7 +115,7 @@ int main(int argc, char** argv)
 
 	snprintf(szTitle, sizeof(szTitle), "Pain Platformer (Build: %d, git: %s)", GAME_BUILD_NUMBER, GAME_GIT_DESC);
 
-	if (CGame::Instance()->Init(szTitle, 100, 100, 640, 480, false))
+	if (CGame::Instance()->Init(szTitle, 100, 100, WIDTH, HEIGHT, false))
 	{
 		while (CGame::Instance()->IsRunning())
 		{
