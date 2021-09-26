@@ -10,10 +10,14 @@ add_compile_definitions(_GAME_)
 set(PainNSuffering_Src
     src/main.cpp
     src/Game.cpp
+    src/TextureManager.cpp
+    src/EventHandler.cpp
 )
 
 set(PainNSuffering_Header
     src/Game.h
+    src/TextureManager.h
+    src/EventHandler.h
 )
 
 if (WIN32)
@@ -95,6 +99,8 @@ elseif(UNIX)
     add_executable (${GAME_NAME} ${PainNSuffering_Src} ${PainNSuffering_Header})
 endif()
 
+add_dependencies(${GAME_NAME} EngineMetadata)
+
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set_target_properties(${GAME_NAME} PROPERTIES 
         OUTPUT_NAME "pain"
@@ -121,3 +127,5 @@ elseif (WIN32)
             PATTERN "Testing" EXCLUDE
     )
 endif()
+
+install (DIRECTORY assets DESTINATION ./)

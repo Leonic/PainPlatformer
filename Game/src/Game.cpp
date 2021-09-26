@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "TextureManager.h"
+#include "EventHandler.h"
 #include <iostream>
 
 Game* Game::s_pInstance = 0;
@@ -30,6 +32,10 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
 				SDL_SetRenderDrawColor(m_pRenderer,
 					255, 255, 255, 255);
 
+                if (!TextureManager::Instance()->Load("assets/akrius.png", "akrius", m_pRenderer))
+				{
+					return false;
+				}
 			}
 			else
 			{
@@ -55,6 +61,9 @@ void Game::Draw()
 {
 	SDL_RenderClear(m_pRenderer); // clear the renderer to draw color
 
+    if (TextureManager::Instance()->m_textureMap["akrius"] != nullptr)
+        TextureManager::Instance()->Draw("akrius", 0, 0, 437, 437, m_pRenderer);
+
 	SDL_RenderPresent(m_pRenderer); // draw to the screen
 }
 
@@ -65,15 +74,16 @@ void Game::OnThink()
 
 void Game::HandleEvents()
 {
-
+    EventHandler::Instance()->OnThink();
 }
 
 void Game::Destroy()
 {
 	std::cout << "Cleaning Game instance...\n";
 
-	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
+	SDL_DestroyWindow(m_pWindow);
+
 	SDL_Quit();
 }
 

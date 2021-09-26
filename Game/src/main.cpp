@@ -1,9 +1,15 @@
 #include <string>
 #include <iostream>
 #include "Game.h"
+#include "EngineMetadata.h"
+
+#ifdef WIN32
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#endif
 
 int FPS = 62;
-int DELAY_TIME = 1000 / FPS;
+Uint32 DELAY_TIME = 1000 / FPS;
 
 const char* WIDTH_PARAM = "-w";
 const char* HEIGHT_PARAM = "-h";
@@ -11,6 +17,13 @@ const char* FULLSCREEN_PARAM = "-f";
 const char* FPS_PARAM = "-fps";
 
 bool m_bRunning = false;
+
+std::string get_current_dir() {
+	char buff[FILENAME_MAX]; //create string buffer to hold path
+	GetCurrentDir(buff, FILENAME_MAX);
+	std::string current_working_dir(buff);
+	return current_working_dir;
+}
 
 bool FlagExists(char** argv, int argc, const char* flag)
 {
@@ -51,8 +64,12 @@ void SetFPS(int newFPS)
 int main(int argc, char** argv)
 {
     Uint32 frameStart, frameTime;
+
+	char szTitle[999];
 	
-	if (Game::Instance()->Init("PainPlatformer", 100, 100, 640, 480, false))
+	snprintf(szTitle, sizeof(szTitle), "Pain Platformer (Build: %d, git: %s) %s", GAME_BUILD_NUMBER, GAME_GIT_DESC, get_current_dir().c_str());
+
+	if (Game::Instance()->Init(szTitle, 100, 100, 640, 480, false))
 	{
 		while (Game::Instance()->IsRunning())
 		{
@@ -66,7 +83,6 @@ int main(int argc, char** argv)
 
 			if (frameTime < DELAY_TIME)
 			{
-				SDL_Delay(10);
 				SDL_Delay((int)(DELAY_TIME - frameTime));
 			}
 		}
