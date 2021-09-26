@@ -35,6 +35,7 @@ if (WIN32)
     set(SDL2_LIBRARIES SDL2::SDL2 SDL2::SDL2main)
     set(SDL2_IMAGE_LIBRARIES SDL2::SDL2_image)
     set(SDL2_TTF_LIBRARIES SDL2::SDL2_ttf)
+    set(SDL2_MIXER_LIBRARIES SDL2::SDL2_mixer)
 endif()
 
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
@@ -49,6 +50,7 @@ find_package(fmt CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
+find_package(SDL2_mixer REQUIRED)
 find_package(RapidJSON REQUIRED)
 find_package(ZLIB REQUIRED)
 
@@ -74,6 +76,7 @@ set (PainNSuffering_Libs
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
+    ${SDL2_MIXER_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )
 
@@ -81,6 +84,7 @@ include_directories("${PROJECT_SOURCE_DIR}/Game/src")
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
 include_directories(${SDL2_TTF_INCLUDE_DIRS})
+include_directories(${SDL2_MIXER_INCLUDE_DIRS})
 include_directories(${RAPIDJSON_INCLUDE_DIRS})
 include_directories(${ZLIB_INCLUDE_DIRS})
 

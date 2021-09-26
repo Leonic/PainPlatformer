@@ -100,7 +100,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		return -1;
 	}
 
-	std::cout << "Cleaning up...\n";
+	std::cout << "(main.cpp) Cleaning up...\n";
 	CGame::Instance()->Destroy();
 
 	return 0;
@@ -135,11 +135,11 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		std::cout << "Engine Error (Game Init failed!) - " << SDL_GetError() << "\n";
+		std::cout << "(main.cpp) Engine Error (Game Init failed!) - " << SDL_GetError() << "\n";
 		return -1;
 	}
 
-	std::cout << "Cleaning up...\n";
+	std::cout << "(main.cpp) Cleaning up...\n";
 	CGame::Instance()->Destroy();
 
 	return 0;
