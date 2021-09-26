@@ -33,15 +33,16 @@ bool CGame::Init(const char* title, int xpos, int ypos, int width, int height, b
 				SDL_SetRenderDrawColor(m_pRenderer,
 					255, 255, 255, 255);
 
-                if (!CTextureManager::Instance()->Load("assets/player.png", "akrius", m_pRenderer))
+                if (!CTextureManager::Instance()->Load("assets/player.png", "leo", m_pRenderer))
 				{
 					return false;
 				}
 
-				m_Objects.push_back(new CPlayer("Test", "akrius", CVector2D(0, 0), CVector2D(128, 128)));
+				m_Objects.push_back(new CPlayer("Test", "leo", CVector2D(0, 0), CVector2D(128, 128)));
 
 				// we need to use placeholders, for some reason
 				CEventHandler::Instance()->AddOnMouseDown(std::bind(&CGame::testCallback, this, std::placeholders::_1));
+				CEventHandler::Instance()->AddOnFingerDown(std::bind(&CGame::testCallback, this, std::placeholders::_1));
 				CEventHandler::Instance()->AddOnMouseUp(std::bind(&CGame::testCallback, this, std::placeholders::_1));
 			}
 			else
@@ -108,8 +109,13 @@ void CGame::testCallback(SDL_Event e)
 {
 	switch (e.type)
 	{
+	case SDL_FINGERDOWN:
 	case SDL_MOUSEBUTTONDOWN:
+		int x, y;
+		SDL_GetMouseState(&x, &y);
+
 		std::cout << "(CGame::testCallback) Mouse Down!" << std::endl;
+		m_Objects.push_back(new CPlayer("Test", "leo", CVector2D(x, y), CVector2D(128, 128)));
 		break;
 	case SDL_MOUSEBUTTONUP:
 		std::cout << "(CGame::testCallback) Mouse Up!" << std::endl;
