@@ -1,6 +1,6 @@
 #include <string>
-#include <SDL2/SDL.h>
 #include <iostream>
+#include "Game.h"
 
 int FPS = 62;
 int DELAY_TIME = 1000 / FPS;
@@ -51,45 +51,34 @@ void SetFPS(int newFPS)
 int main(int argc, char** argv)
 {
     Uint32 frameStart, frameTime;
-	char title[420] = "PainPlatformer";
-
-	SDL_Window* m_pWindow = nullptr;
-	SDL_Renderer* m_pRenderer = nullptr;
-
-    if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
+	
+	if (Game::Instance()->Init("PainPlatformer", 100, 100, 640, 480, false))
 	{
-		m_pWindow = SDL_CreateWindow(title, 0, 0, 640, 480, NULL);
-
-		if (m_pWindow != 0)
+		while (Game::Instance()->IsRunning())
 		{
-			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_ACCELERATED);
+			frameStart = SDL_GetTicks();
 
-			if (m_pRenderer != 0) // render init success
+			Game::Instance()->HandleEvents();
+			Game::Instance()->OnThink();
+			Game::Instance()->Draw();
+
+			frameTime = SDL_GetTicks() - frameStart;
+
+			if (frameTime < DELAY_TIME)
 			{
-				SDL_SetRenderDrawColor(m_pRenderer,
-					255, 255, 255, 255);
-				
-				m_bRunning = true; // everything inited successfully, start the main loop
-				SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
+				SDL_Delay(10);
+				SDL_Delay((int)(DELAY_TIME - frameTime));
 			}
 		}
 	}
-
-	while (m_bRunning)
+	else
 	{
-		frameStart = SDL_GetTicks();
-
-		SDL_RenderClear(m_pRenderer); // clear the renderer to draw color
-
-		SDL_RenderPresent(m_pRenderer); // draw to the screen
-
-		frameTime = SDL_GetTicks() - frameStart;
-
-		if (frameTime < Uint32(DELAY_TIME))
-		{
-			SDL_Delay((int)(DELAY_TIME - frameTime));
-		}
+		std::cout << "Engine Error (Game Init failed!) - " << SDL_GetError() << "\n";
+		return -1;
 	}
+
+	std::cout << "Cleaning up...\n";
+	Game::Instance()->Destroy();
 
     return 0;
 }

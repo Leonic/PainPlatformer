@@ -9,9 +9,11 @@ add_compile_definitions(_GAME_)
 
 set(PainNSuffering_Src
     src/main.cpp
+    src/Game.cpp
 )
 
 set(PainNSuffering_Header
+    src/Game.h
 )
 
 if (WIN32)
