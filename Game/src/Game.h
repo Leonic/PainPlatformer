@@ -37,11 +37,12 @@ public:
 	// a function to access the private running variable
 	bool IsRunning() { return m_bRunning; }
 
+	void testCallback(SDL_Event e);
+
 	SDL_Renderer* GetRenderer() const { return m_pRenderer; }
 	SDL_Window* GetWindow() const { return m_pWindow; }
 
 private:
-
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 
